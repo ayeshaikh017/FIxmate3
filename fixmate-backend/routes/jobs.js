@@ -1,21 +1,31 @@
 const express = require('express');
 const router = express.Router();
 const { protect, userOnly, workerOnly } = require('../middleware/auth');
+const {
+  createJob,
+  getAllJobs,
+  getJobById,
+  acceptJob,
+  updateJobStatus,
+  completeJob,
+  cancelJob,
+  updateJob,
+  deleteJob
+} = require('../controllers/jobController');
 
-router.post('/', userOnly, (req, res) => {
-  res.json({ success: true, message: 'Create job endpoint' });
-});
+// Public routes
+router.get('/', protect, getAllJobs);
+router.get('/:id', protect, getJobById);
 
-router.get('/', protect, (req, res) => {
-  res.json({ success: true, message: 'Get jobs', data: [] });
-});
+// User routes
+router.post('/', userOnly, createJob);
+router.put('/:id', userOnly, updateJob);
+router.delete('/:id', userOnly, deleteJob);
+router.post('/:id/cancel', userOnly, cancelJob);
 
-router.get('/:id', protect, (req, res) => {
-  res.json({ success: true, message: 'Get job by ID' });
-});
-
-router.post('/:id/accept', workerOnly, (req, res) => {
-  res.json({ success: true, message: 'Accept job' });
-});
+// Worker routes
+router.post('/:id/accept', workerOnly, acceptJob);
+router.post('/:id/complete', workerOnly, completeJob);
+router.put('/:id/status', workerOnly, updateJobStatus);
 
 module.exports = router;
