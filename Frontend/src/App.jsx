@@ -1,7 +1,9 @@
+import ChatPage from './pages/ChatPage';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import { Toaster } from 'react-hot-toast';
 import { AuthProvider } from './context/AuthContext';
 import { SocketProvider } from './context/SocketContext';
+
 import Navbar from './components/common/Navbar';
 import Footer from './components/common/Footer';
 import PrivateRoute from './components/common/PrivateRoute';
@@ -28,6 +30,8 @@ function App() {
             <Navbar />
             <main className="flex-grow">
               <Routes>
+             
+
                 <Route path="/" element={<Home />} />
                 <Route path="/login" element={<Login />} />
                 <Route path="/register/user" element={<RegisterUser />} />
@@ -38,7 +42,8 @@ function App() {
                 <Route path="/workers" element={<PrivateRoute role="user"><WorkerSearch /></PrivateRoute>} />
                 <Route path="/jobs/create" element={<PrivateRoute role="user"><CreateJob /></PrivateRoute>} />
                 <Route path="/jobs/:id" element={<PrivateRoute><JobDetails /></PrivateRoute>} />
-                
+                <Route path="/chat" element={<PrivateRoute><ChatPage /></PrivateRoute>} />
+               
                 <Route path="/worker/dashboard" element={<PrivateRoute role="worker"><WorkerDashboard /></PrivateRoute>} />
                 <Route path="/worker/profile" element={<PrivateRoute role="worker"><WorkerProfile /></PrivateRoute>} />
                 
