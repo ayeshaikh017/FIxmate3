@@ -21,47 +21,107 @@ const ChatBox = () => {
     setText("");
   };
 
-  return (
+ return (
+  <div style={{
+    position: "fixed",
+    bottom: "30px",
+    right: "30px",
+    width: "380px",
+    height: "500px",
+    background: "#ffffff",
+    borderRadius: "20px",
+    boxShadow: "0 10px 30px rgba(0,0,0,0.15)",
+    display: "flex",
+    flexDirection: "column",
+    overflow: "hidden",
+    fontFamily: "Arial, sans-serif"
+  }}>
+
+    {/* Header */}
     <div style={{
-      position: "fixed",
-      bottom: "20px",
-      right: "20px",
-      width: "300px",
-      background: "white",
-      border: "1px solid gray",
-      padding: "10px",
-      borderRadius: "10px",
-      boxShadow: "0px 0px 10px rgba(0,0,0,0.2)"
+      background: "#4F46E5",
+      color: "white",
+      padding: "15px",
+      fontSize: "18px",
+      fontWeight: "bold"
     }}>
+      💬 Live Chat
+    </div>
 
-      <h4>Live Chat</h4>
+    {/* Messages */}
+    <div style={{
+      flex: 1,
+      padding: "15px",
+      overflowY: "auto",
+      background: "#f9fafb"
+    }}>
+      {messages.map((msg, index) => {
+        const isMe = msg.senderId === user._id;
 
-      <div style={{
-        height: "200px",
-        overflowY: "auto",
-        marginBottom: "10px"
-      }}>
-        {messages.map((msg, index) => (
-          <div key={index}>
-            <b>{msg.senderId === user._id ? "Me" : "Other"} :</b>
-            {msg.message}
+        return (
+          <div
+            key={index}
+            style={{
+              display: "flex",
+              justifyContent: isMe ? "flex-end" : "flex-start",
+              marginBottom: "10px"
+            }}
+          >
+            <div style={{
+              maxWidth: "70%",
+              padding: "10px 14px",
+              borderRadius: "18px",
+              background: isMe ? "#4F46E5" : "#e5e7eb",
+              color: isMe ? "white" : "black",
+              fontSize: "14px"
+            }}>
+              {msg.message}
+            </div>
           </div>
-        ))}
-      </div>
+        );
+      })}
+    </div>
 
+    {/* Input Area */}
+    <div style={{
+      display: "flex",
+      padding: "10px",
+      borderTop: "1px solid #e5e7eb",
+      background: "white"
+    }}>
       <input
         value={text}
         onChange={(e) => setText(e.target.value)}
-        placeholder="Type message"
-        style={{ width: "70%" }}
+        placeholder="Type a message..."
+        style={{
+          flex: 1,
+          padding: "10px",
+          borderRadius: "20px",
+          border: "1px solid #d1d5db",
+          outline: "none",
+          fontSize: "14px"
+        }}
       />
 
-      <button onClick={handleSend}>
+      <button
+        onClick={handleSend}
+        style={{
+          marginLeft: "8px",
+          padding: "10px 16px",
+          borderRadius: "20px",
+          border: "none",
+          background: "#4F46E5",
+          color: "white",
+          fontWeight: "bold",
+          cursor: "pointer"
+        }}
+      >
         Send
       </button>
-
     </div>
-  );
+
+  </div>
+);
 };
 
 export default ChatBox;
